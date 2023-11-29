@@ -3,15 +3,15 @@ package com.drakend.scholarshipManage.utils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class ModelMapperCustom extends ModelMapper {
 
-	private static ModelMapperCustom instance;
+	private static ModelMapper instance;
 
 	private ModelMapperCustom() {
 	}
 
-	private static ModelMapperCustom getInstance() {
+	private static ModelMapper getInstance() {
 		if (instance == null) {
 			instance = new ModelMapperCustom();
 		}

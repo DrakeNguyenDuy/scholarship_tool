@@ -14,29 +14,22 @@ import org.hibernate.annotations.GenericGenerator;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity(name = "user")
+@Entity(name="university")
 @Getter
 @Setter
-public class User {
+public class University {
 
 	@Id
 	@GeneratedValue(generator = "uuid")
 	@GenericGenerator(name = "uuid", strategy = "uuid2")
 	private String id;
-
-	@Column(name = "email", nullable = false)
-	private String email;
-
-	@Column(name = "password", nullable = false)
-	private String password;
-
-	@Column(name = "citizend_id")
-	private String citizenId;
-
+	
+	@Column
+	private String name;
+	
 	@Embedded
 	private AuditSection auditSection;
-
-	@OneToMany(mappedBy = "user")
-	private Set<UserGroup> userGroups;
-
+	
+	@OneToMany(mappedBy = "university")
+	private Set<Personal> personals;
 }
