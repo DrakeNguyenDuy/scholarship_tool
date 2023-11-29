@@ -3,6 +3,7 @@ package com.drakend.scholarshipManage.service.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -10,14 +11,19 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.drakend.scholarshipManage.entity.GroupRole;
+import com.drakend.scholarshipManage.entity.RolePermission;
 import com.drakend.scholarshipManage.entity.User;
 import com.drakend.scholarshipManage.entity.UserGroup;
+import com.drakend.scholarshipManage.enums.StatusActive;
+import com.drakend.scholarshipManage.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @AllArgsConstructor
 @Getter
+@RequiredArgsConstructor
 public class UserDetailImpl implements UserDetails {
 
 	/**
@@ -26,19 +32,27 @@ public class UserDetailImpl implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	private User user;
 
+	private final UserRepository userRepository;
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Set<UserGroup> userGroupSet = user.getUserGroups();
-		Set<String> roles = new HashSet<>();
+		Set<GroupRole> groupRoles = new HashSet<>();
+		Set<RolePermission> rolePermissions = new HashSet<>();
+		Set<String> permissions = new HashSet<String>();
 		for (UserGroup userGroup : userGroupSet) {
-			Set<GroupRole> groupRoles = userGroup.getGroup().getGroupRoles();
-			for (GroupRole groupRole : groupRoles) {
-				roles.add(groupRole.getRole().getName());
-			}
+			groupRoles.addAll(userGroup.getGroup().getGroupRoles());
 		}
-		Collection<SimpleGrantedAuthority> simpleGrantedAuthorities = new ArrayList<SimpleGrantedAuthority>();
-		for (String role : roles) {
-			simpleGrantedAuthorities.add(new SimpleGrantedAuthority(role));
+		for (GroupRole groupRole : groupRoles) {
+			rolePermissions.addAll(groupRole.getRole().getRolePermissions());
+		}
+		for (RolePermission rolePermission : rolePermissions) {
+			permissions.add(rolePermission.getPermission().getName());
+		}
+		
+		Collection<SimpleGrantedAuthority> simpleGrantedAuthorities = new ArrayList<>();
+		for (String permission : permissions) {
+			simpleGrantedAuthorities.add(new SimpleGrantedAuthority(permission));
 		}
 		return simpleGrantedAuthorities;
 	}
@@ -70,6 +84,6 @@ public class UserDetailImpl implements UserDetails {
 
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return user != null && user.getAuditSection().getStatus() == StatusActive.ACTIVE;
 	}
 }

@@ -7,8 +7,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
 
+import lombok.Getter;
+
 @Entity
 @Table(name = "role_permission")
+@Getter
 public class RolePermission {
 	
 	@EmbeddedId
