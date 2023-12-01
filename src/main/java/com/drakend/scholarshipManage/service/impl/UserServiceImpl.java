@@ -1,7 +1,5 @@
 package com.drakend.scholarshipManage.service.impl;
 
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,23 +10,57 @@ import com.drakend.scholarshipManage.service.UserService;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * <p>
+ * User service implement
+ * </p>
+ * 
+ * @author NguyenDuyLong2810
+ */
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
 	private final UserRepository userRepository;
 
+	/**
+	 * <p>
+	 * Save user entity (Used to creating or updating)
+	 * </p>
+	 * 
+	 * @author NguyenDuyLong2810
+	 * @param user
+	 * @return User
+	 */
 	@Override
 	@Transactional
 	public User save(User user) {
 		return userRepository.save(user);
 	}
 
+	/**
+	 * <p>
+	 * Check a email is exist
+	 * </p>
+	 * 
+	 * @author NguyenDuyLong2810
+	 * @param email
+	 * @return boolean
+	 */
 	@Override
 	public boolean isExistByEmail(String email) {
 		return userRepository.findByEmail(email).isPresent();
 	}
 
+	/**
+	 * <p>
+	 * Find user by email
+	 * </p>
+	 * 
+	 * @author NguyenDuyLong2810
+	 * @param email
+	 * @return User
+	 */
 	@Override
 	public User findByEmail(String email) {
 		return userRepository.findByEmail(email)

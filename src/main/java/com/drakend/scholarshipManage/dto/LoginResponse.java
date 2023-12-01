@@ -20,4 +20,7 @@ public class LoginResponse {
 	private String accessToken;
 	
 	private Set<String> permissions;
+	
+	@JsonProperty("exprire_in")
+	private Long exprireIn;
 }
