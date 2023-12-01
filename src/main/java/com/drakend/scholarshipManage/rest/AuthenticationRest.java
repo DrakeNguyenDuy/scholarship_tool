@@ -18,6 +18,10 @@ import com.drakend.scholarshipManage.service.impl.UserDetailServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * @author NguyenDuyLong2810
+ * <p>This controller for authentication</p>
+ */
 @RestController
 @RequiredArgsConstructor
 class AuthenticationRest {
@@ -32,14 +36,6 @@ class AuthenticationRest {
 	@PostMapping(URLCommon.LOGIN)
 	ResponseEntity<LoginResponse> login(@RequestBody UserDTO userDTO) {
 		return ResponseEntity.ok(authenticationFacade.login(userDTO));
-	}
-
-	@PatchMapping(URLCommon.EDIT_ROLE)
-	ResponseEntity<RoleDTO> editRole(@PathVariable String id, @RequestBody RoleDTO roleDTO,
-			Authentication authentication) {
-		UserDetailImpl userDetailImpl = (UserDetailImpl) authentication.getPrincipal();
-		roleDTO.setId(id);
-		return ResponseEntity.ok(authenticationFacade.editRole(roleDTO, userDetailImpl.getUser().getId()));
 	}
 
 }

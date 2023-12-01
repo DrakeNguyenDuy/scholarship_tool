@@ -6,4 +6,6 @@ import com.drakend.scholarshipManage.entity.Role;
 public interface RoleService {
 
 	Role editRole(RoleDTO roleDTO, String idModifiedBy);
+
+	Role createRole(RoleDTO roleDTO, String createdBy);
 }

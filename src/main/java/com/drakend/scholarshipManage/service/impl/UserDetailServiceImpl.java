@@ -16,6 +16,15 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
 	private final UserRepository userRepository;
 
+	/**
+	 * <p>
+	 * This method will help load user by user name (email)
+	 * </p>
+	 * 
+	 * @author NguyenDuyLong2810
+	 * @param userName
+	 * @return {@link UserDetails}
+	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) {
 		User user = userRepository.findByEmail(username)

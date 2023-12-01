@@ -16,7 +16,10 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * <p>Helper relate token</p>
+ * <p>
+ * Helper relate token
+ * </p>
+ * 
  * @author NguyenDuyLong2810
  */
 @Component
@@ -35,7 +38,10 @@ public class JwtTokenProvider {
 	}
 
 	/**
-	 * <p>Extract user id from jwt</p>
+	 * <p>
+	 * Extract user id from jwt
+	 * </p>
+	 * 
 	 * @author NguyenDuyLong2810
 	 * @param token
 	 * @return String
@@ -45,9 +51,11 @@ public class JwtTokenProvider {
 		return claims.getSubject();
 	}
 
-	
 	/**
-	 * <p>Get millisecond expire between expiration in token and now</p>
+	 * <p>
+	 * Get millisecond expire between expiration in token and now
+	 * </p>
+	 * 
 	 * @author NguyenDuyLong2810
 	 * @param token
 	 * @return Long
@@ -61,7 +69,10 @@ public class JwtTokenProvider {
 	}
 
 	/**
-	 * <p>Validate token</p>
+	 * <p>
+	 * Validate token
+	 * </p>
+	 * 
 	 * @author NguyenDuyLong2810
 	 * @param authToken
 	 * @return boolean

@@ -1,7 +1,6 @@
 package com.drakend.scholarshipManage.facade.impl;
 
 import java.util.Date;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -15,16 +14,12 @@ import org.springframework.stereotype.Service;
 
 import com.drakend.scholarshipManage.config.JwtTokenProvider;
 import com.drakend.scholarshipManage.dto.LoginResponse;
-import com.drakend.scholarshipManage.dto.PermissionDTO;
-import com.drakend.scholarshipManage.dto.RoleDTO;
 import com.drakend.scholarshipManage.dto.UserDTO;
 import com.drakend.scholarshipManage.entity.AuditSection;
-import com.drakend.scholarshipManage.entity.Role;
 import com.drakend.scholarshipManage.entity.User;
 import com.drakend.scholarshipManage.enums.StatusActive;
 import com.drakend.scholarshipManage.exception.ResourceWasExistException;
 import com.drakend.scholarshipManage.facade.AuthenticationFacade;
-import com.drakend.scholarshipManage.service.RoleService;
 import com.drakend.scholarshipManage.service.UserService;
 import com.drakend.scholarshipManage.service.impl.UserDetailImpl;
 
@@ -45,8 +40,6 @@ public class AuthenticationFacadeImpl implements AuthenticationFacade {
 
 	private final UserService userService;
 
-	private final RoleService roleService;
-
 	private final PasswordEncoder passwordEncoder;
 
 	private final AuthenticationManager authenticationManager;
@@ -63,7 +56,7 @@ public class AuthenticationFacadeImpl implements AuthenticationFacade {
 	 * 
 	 * @author NguyenDuyLong2810
 	 * @param userDto
-	 * @return UserDto
+	 * @return {@link UserDTO}
 	 * 
 	 */
 	@Override
@@ -85,7 +78,7 @@ public class AuthenticationFacadeImpl implements AuthenticationFacade {
 	 * 
 	 * @author NguyenDuyLong2810
 	 * @param userDto
-	 * @return LoginRseponse
+	 * @return {@link LoginRseponse}
 	 * 
 	 */
 	@Override
@@ -100,27 +93,6 @@ public class AuthenticationFacadeImpl implements AuthenticationFacade {
 				.permissions(authentication.getAuthorities().stream().map(item -> item.getAuthority())
 						.collect(Collectors.toSet()))
 				.userId(user.getId()).exprireIn(jwtTokenProvider.getExpireIn(jwt)).build();
-	}
-
-	/**
-	 * <p>
-	 * This method will update data include name, description and permissions by
-	 * role
-	 * </p>
-	 * 
-	 * @author NguyenDuyLong2810
-	 * @param id, roleDto, isModifiedBy
-	 * @return Role
-	 * 
-	 */
-	@Override
-	public RoleDTO editRole(RoleDTO roleDTO, String idModifiedBy) {
-		Role role = roleService.editRole(roleDTO, idModifiedBy);
-		Set<PermissionDTO> permissionDTOs = role.getRolePermissions().stream()
-				.map(item -> modelMapper.map(item.getPermission(), PermissionDTO.class)).collect(Collectors.toSet());
-		RoleDTO result = modelMapper.map(role, RoleDTO.class);
-		result.setPermissions(permissionDTOs);
-		return result;
 	}
 
 }

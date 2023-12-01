@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 	 * 
 	 * @author NguyenDuyLong2810
 	 * @param user
-	 * @return User
+	 * @return {@link User}
 	 */
 	@Override
 	@Transactional
@@ -59,7 +59,8 @@ public class UserServiceImpl implements UserService {
 	 * 
 	 * @author NguyenDuyLong2810
 	 * @param email
-	 * @return User
+	 * @return {@link User}
+	 * @throws ResourceNotFoundException
 	 */
 	@Override
 	public User findByEmail(String email) {
