@@ -13,4 +13,5 @@ public class Permission extends BaseEntity {
 
 	@OneToMany(mappedBy = "permission")
 	private Set<RolePermission> rolePermissions;
+	
 }

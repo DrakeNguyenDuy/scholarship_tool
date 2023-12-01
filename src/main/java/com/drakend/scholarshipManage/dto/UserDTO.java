@@ -1,8 +1,5 @@
 package com.drakend.scholarshipManage.dto;
 
-import java.util.List;
-import java.util.Set;
-
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;

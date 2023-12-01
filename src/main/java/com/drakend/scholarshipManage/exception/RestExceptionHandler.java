@@ -22,4 +22,10 @@ public class RestExceptionHandler {
 	public ErrorResponse resourceWasExistException(Exception ex, WebRequest request) {
 		return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "RESOURCE_WAS_EXIST", ex.getMessage());
 	}
+	
+	@ExceptionHandler(BadAgrumentException.class)
+	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+	public ErrorResponse badAgrumentException(Exception ex, WebRequest request) {
+		return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "BAD_AGRUMENT", ex.getMessage());
+	}
 }

@@ -1,12 +1,9 @@
-id	create_by	modified_by	status	description	name	date_created	date_modified
-7c2f8c14-80be-655e-9927-4ff5e08bb3e9					Add Alumnus		
-7232d55d-a625-f4db-a21b-47d4963117b4							
-6df7a90b-6fc8-ea1e-61b0-685941946927							
-a59ae572-64b8-d774-7bc2-0256b44fcb32							
-49ec9a9d-769e-3850-7451-e6d1648f5dde							
-d737eb21-9aa0-1721-4aa2-4d232ed6fa45							
-15f5a171-56f9-5770-59b8-4000c2be0e3a							
-c18d44b5-c609-242c-c7fa-b1494ebb5bda							
-ddac98c8-c187-d9cf-459f-e1c0f8cb387a							
-9bbaf793-ec35-7741-5261-1cb37f7840d4							
-df72c914-a9b5-b1ff-9525-cc79184705de							
+id,create_by,date_created,date_modified,modified_by,status,description,name
+15f5a171-56f9-5770-59b8-4000c2be0e3a," ","2023-11-29 16:57:35.496000","2023-11-29 16:57:35.496000"," ",0,"Remove Sub Admin",REMOVE_SUB_ADMIN
+49ec9a9d-769e-3850-7451-e6d1648f5dde,,"2023-11-29 16:57:35.496000","2023-11-29 16:57:35.496000"," ",0,"View Alumnuses",VIEW_ALUMNUSES
+6df7a90b-6fc8-ea1e-61b0-685941946927," ","2023-11-29 16:57:35.496000","2023-11-29 16:57:35.496000"," ",0,"Edit Alumnus",EDIT_ALUMNUS
+7232d55d-a625-f4db-a21b-47d4963117b4," ","2023-11-29 16:57:35.496000","2023-11-29 16:57:35.496000"," ",0,"Remove Alumnus",REMOVE_ALUMNUS
+7c2f8c14-80be-655e-9927-4ff5e08bb3e9," ","2023-11-29 16:57:35.496000","2023-11-29 16:57:35.496000"," ",0,"Add Alumnus",ADD_ALUMNUS
+c18d44b5-c609-242c-c7fa-b1494ebb5bda," ","2023-11-29 16:57:35.496000","2023-11-29 16:57:35.496000"," ",0,"Edit Sub Admin",EDIT_SUB_ADMIN
+d737eb21-9aa0-1721-4aa2-4d232ed6fa45," ","2023-11-29 16:57:35.496000","2023-11-29 16:57:35.496000"," ",0,"Create Sub Admin",CREATE_SUB_ADMIN
+ddac98c8-c187-d9cf-459f-e1c0f8cb387a," ","2023-11-29 16:57:35.496000","2023-11-29 16:57:35.496000"," ",0,"View All Admins",VIEW_ALL_ADMINS

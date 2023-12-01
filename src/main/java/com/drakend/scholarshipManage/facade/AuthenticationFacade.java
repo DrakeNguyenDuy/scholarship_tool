@@ -6,6 +6,7 @@ import com.drakend.scholarshipManage.dto.UserDTO;
 public interface AuthenticationFacade {
 
 	UserDTO register(UserDTO userDTO);
-	
-	LoginResponse login (UserDTO userDTO);
+
+	LoginResponse login(UserDTO userDTO);
+
 }

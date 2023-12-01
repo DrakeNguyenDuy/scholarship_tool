@@ -27,6 +27,18 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 	@Autowired
 	private UserDetailsService userDetailsService;
 
+	/**
+	 * <p>
+	 * This method will help filter request have token
+	 * </p>
+	 * 
+	 * @author NguyenDuyLong2810
+	 * @param request
+	 * @param response
+	 * @param filterChain
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
@@ -44,6 +56,15 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 		filterChain.doFilter(request, response);
 	}
 
+	/**
+	 * <p>
+	 * This method will help extract JWT from header request
+	 * </p>
+	 * 
+	 * @author NguyenDuyLong2810
+	 * @param request
+	 * @return String
+	 */
 	private String extractJwtFromRequest(HttpServletRequest request) {
 		String bearerToken = request.getHeader(Constant.AUTHORIZATION);
 		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(Constant.BEARER)) {

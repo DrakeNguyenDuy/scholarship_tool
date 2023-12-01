@@ -14,4 +14,6 @@ public class Constant {
 	
 	//Specific Characters
 	public static final String SLASH ="/";
+	public static final String UNDER_SCORE="_";
+	
 }

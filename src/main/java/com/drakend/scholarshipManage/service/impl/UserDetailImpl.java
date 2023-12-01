@@ -3,7 +3,6 @@ package com.drakend.scholarshipManage.service.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -15,7 +14,6 @@ import com.drakend.scholarshipManage.entity.RolePermission;
 import com.drakend.scholarshipManage.entity.User;
 import com.drakend.scholarshipManage.entity.UserGroup;
 import com.drakend.scholarshipManage.enums.StatusActive;
-import com.drakend.scholarshipManage.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,8 +29,6 @@ public class UserDetailImpl implements UserDetails {
 	 */
 	private static final long serialVersionUID = 1L;
 	private User user;
-
-	private final UserRepository userRepository;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
