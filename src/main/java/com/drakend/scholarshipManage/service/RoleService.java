@@ -1,11 +1,20 @@
 package com.drakend.scholarshipManage.service;
 
+import java.util.List;
+import java.util.Map;
+
 import com.drakend.scholarshipManage.dto.RoleDTO;
 import com.drakend.scholarshipManage.entity.Role;
 
 public interface RoleService {
 
-	Role editRole(RoleDTO roleDTO, String idModifiedBy);
+	Role edit(RoleDTO roleDTO, String idModifiedBy);
 
-	Role createRole(RoleDTO roleDTO, String createdBy);
+	Role create(RoleDTO roleDTO, String createdBy);
+
+	List<Role> findAll(Map<String, String> query);
+
+	Role findById(String id);
+
+	String delete(String id);
 }

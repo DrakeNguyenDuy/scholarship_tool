@@ -12,7 +12,7 @@ import com.drakend.scholarshipManage.dto.ErrorResponse;
 public class RestExceptionHandler {
 
 	@ExceptionHandler(ResourceNotFoundException.class)
-	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+	@ResponseStatus(value = HttpStatus.NOT_FOUND)
 	public ErrorResponse resourceNotFoundException(Exception ex, WebRequest request) {
 		return new ErrorResponse(HttpStatus.NOT_FOUND.value(), "NOT_FOUND_RESOURCE", ex.getMessage());
 	}

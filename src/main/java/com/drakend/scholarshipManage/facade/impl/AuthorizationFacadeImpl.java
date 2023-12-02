@@ -1,5 +1,7 @@
 package com.drakend.scholarshipManage.facade.impl;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -45,8 +47,8 @@ public class AuthorizationFacadeImpl implements AuthorizationFacade {
 	 * 
 	 */
 	@Override
-	public RoleDTO editRole(RoleDTO roleDTO, String idModifiedBy) {
-		Role role = roleService.editRole(roleDTO, idModifiedBy);
+	public RoleDTO edit(RoleDTO roleDTO, String idModifiedBy) {
+		Role role = roleService.edit(roleDTO, idModifiedBy);
 		return buildDTOReturn(role);
 	}
 
@@ -61,8 +63,8 @@ public class AuthorizationFacadeImpl implements AuthorizationFacade {
 	 * @return {@link RoleDTO}
 	 */
 	@Override
-	public RoleDTO createRole(RoleDTO roleDTO, String createBy) {
-		Role role = roleService.createRole(roleDTO, createBy);
+	public RoleDTO create(RoleDTO roleDTO, String createBy) {
+		Role role = roleService.create(roleDTO, createBy);
 		return buildDTOReturn(role);
 	}
 
@@ -81,6 +83,49 @@ public class AuthorizationFacadeImpl implements AuthorizationFacade {
 		RoleDTO result = modelMapper.map(role, RoleDTO.class);
 		result.setPermissions(permissionDTOs);
 		return result;
+	}
+
+	/**
+	 * <p>
+	 * Find all role
+	 * </p>
+	 * 
+	 * @author NguyenDuyLong2810
+	 * @param query
+	 * @return List<{@link RoleDTO}>
+	 */
+	@Override
+	public List<RoleDTO> findAll(Map<String, String> query) {
+		return roleService.findAll(query).stream().map(this::buildDTOReturn).toList();
+	}
+
+	/**
+	 * <p>
+	 * Find role by id
+	 * </p>
+	 * 
+	 * @author NguyenDuyLong2810
+	 * @param id
+	 * @return {@link RoleDTO}
+	 */
+	@Override
+	public RoleDTO findById(String id) {
+		return buildDTOReturn(roleService.findById(id));
+	}
+
+	/**
+	 * <p>
+	 * Delete role by id
+	 * </p>
+	 * 
+	 * @author NguyenDuyLong2810
+	 * @param id
+	 * @param modifiedBy
+	 * @return {@link String}
+	 */
+	@Override
+	public String delete(String id, String modifiedBy) {
+		return roleService.delete(id);
 	}
 
 }
