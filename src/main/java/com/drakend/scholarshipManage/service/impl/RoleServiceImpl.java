@@ -3,14 +3,15 @@ package com.drakend.scholarshipManage.service.impl;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.transaction.Transactional;
-
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import com.drakend.scholarshipManage.common.Message;
 import com.drakend.scholarshipManage.dto.BaseDTO;
 import com.drakend.scholarshipManage.dto.RoleDTO;
 import com.drakend.scholarshipManage.entity.AuditSection;
@@ -22,11 +23,12 @@ import com.drakend.scholarshipManage.enums.StatusActive;
 import com.drakend.scholarshipManage.exception.BadAgrumentException;
 import com.drakend.scholarshipManage.exception.ResourceNotFoundException;
 import com.drakend.scholarshipManage.exception.ResourceWasExistException;
+import com.drakend.scholarshipManage.helper.DateHelpers;
+import com.drakend.scholarshipManage.repository.GroupRoleRepository;
 import com.drakend.scholarshipManage.repository.PermissionRepository;
 import com.drakend.scholarshipManage.repository.RolePermissionRepository;
 import com.drakend.scholarshipManage.repository.RoleRepository;
 import com.drakend.scholarshipManage.service.RoleService;
-import com.drakend.scholarshipManage.utils.DateHelpers;
 
 import lombok.RequiredArgsConstructor;
 
@@ -47,6 +49,8 @@ public class RoleServiceImpl implements RoleService {
 
 	private final RolePermissionRepository rolePermissionRepository;
 
+	private final GroupRoleRepository groupRoleRepository;
+
 	/**
 	 * <p>
 	 * This method will update data include name, description and permissions by
@@ -56,16 +60,16 @@ public class RoleServiceImpl implements RoleService {
 	 * @author NguyenDuyLong2810
 	 * @param id, roleDto, isModifiedBy
 	 * @return {@link Role}
-	 * @throws ResourceWasExistException
-	 * @throws ResourceNotFoundException
+	 * @throws {@link ResourceWasExistException} - in case role name was existed
+	 * @throws {@link ResourceNotFoundException} - in case can not find role by id
 	 * 
 	 */
 	@Override
 	@Transactional
-	public Role editRole(RoleDTO roleDTO, String idModifiedBy) {
+	public Role edit(RoleDTO roleDTO, String idModifiedBy) {
 		String roleId = roleDTO.getId();
 		Role role = roleRepository.findById(roleId)
-				.orElseThrow(() -> new ResourceNotFoundException("Can not find role"));
+				.orElseThrow(() -> new ResourceNotFoundException(Message.CAN_NOT_FIND_ROLE));
 		String name = roleDTO.getName().toUpperCase();
 		if (roleRepository.findByName(name).isPresent() && !role.getName().equals(name)) {
 			throw new ResourceWasExistException("Role name was existed");
@@ -90,7 +94,7 @@ public class RoleServiceImpl implements RoleService {
 	 * @param idModifiedBy
 	 * @param role
 	 * @param name
-	 * @throws BadAgrumentException
+	 * @throws {@link BadAgrumentException} - in case given a name too long
 	 */
 	private void editRoleEntity(String idModifiedBy, Role role, String name) {
 		if (name.length() > 255) {
@@ -113,15 +117,16 @@ public class RoleServiceImpl implements RoleService {
 	 * @param roleDTO
 	 * @param createdBy
 	 * @return {@link Role}
-	 * @throws ResourceWasExistException
+	 * @throws {@link ResourceWasExistException} - in case given a name was existed
 	 */
 	@Override
-	public Role createRole(RoleDTO roleDTO, String createdBy) {
+	@Transactional
+	public Role create(RoleDTO roleDTO, String createdBy) {
 		String name = roleDTO.getName();
 		if (roleRepository.findByName(name).isPresent()) {
 			throw new ResourceWasExistException("Role name was existed");
 		}
-		Role role = createRoleEntity(createdBy, roleDTO, name);
+		Role role = buildCreateEntity(createdBy, roleDTO, name);
 		Set<String> idPermissions = roleDTO.getPermissions().stream().map(BaseDTO::getId).collect(Collectors.toSet());
 		List<Permission> permissions = permissionRepository.findAllById(idPermissions);
 		Set<RolePermission> rolePermissions = buildRolePermissions(role, permissions);
@@ -157,9 +162,9 @@ public class RoleServiceImpl implements RoleService {
 	 * @param roleDto
 	 * @param name
 	 * @return {@link Role}
-	 * @throws BadAgrumentException
+	 * @throws {@link BadAgrumentException} - in case given a name too long
 	 */
-	private Role createRoleEntity(String createdBy, RoleDTO roleDto, String name) {
+	private Role buildCreateEntity(String createdBy, RoleDTO roleDto, String name) {
 		Role result = new Role();
 		if (name.length() > 255) {
 			throw new BadAgrumentException("Role name too long");
@@ -170,6 +175,56 @@ public class RoleServiceImpl implements RoleService {
 						.dateModified(DateHelpers.getInstance()).status(StatusActive.ACTIVE).build());
 		result.setDescription(roleDto.getDescription());
 		return result;
+	}
+
+	/**
+	 * <p>
+	 * Find all roles
+	 * </p>
+	 * 
+	 * @author NguyenDuyLong2810
+	 * @param query
+	 * @return List<{@link Role}>
+	 */
+	@Override
+	public List<Role> findAll(Map<String, String> query) {
+		return roleRepository.findAll();
+	}
+
+	/**
+	 * <p>
+	 * Find all role by id
+	 * </p>
+	 * 
+	 * @author NguyenDuyLong2810
+	 * @return {@link Role}
+	 * @throws {@link ResourceNotFoundException} - in case given id isn't exist
+	 */
+	@Override
+	public Role findById(String id) {
+		return roleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(Message.CAN_NOT_FIND_ROLE));
+	}
+
+	/**
+	 * <p>
+	 * Delete role and relation ship related
+	 * </p>
+	 * 
+	 * @author NguyenDuyLong2810
+	 * @return {@link String}
+	 * @throws {@link BadAgrumentException} - in case given id is null
+	 */
+	@Override
+	@Transactional
+	public String delete(String id) {
+		try {
+			groupRoleRepository.deleteByRoleId(id);
+			rolePermissionRepository.deleteByRoleId(id);
+			roleRepository.deleteById(id);
+			return Message.SUCCESS;
+		} catch (IllegalArgumentException e) {
+			throw new BadAgrumentException("Role id can't be null");
+		}
 	}
 
 }

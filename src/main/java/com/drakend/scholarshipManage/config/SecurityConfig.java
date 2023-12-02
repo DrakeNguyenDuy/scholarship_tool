@@ -57,8 +57,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable()// block access from domain not allow
 				.authorizeRequests()
 //				.antMatchers(HttpMethod.POST, URLCommon.createSubAdmin).permitAll()
-				.antMatchers(HttpMethod.POST, URLCommon.LOGIN).permitAll()
-				.anyRequest().authenticated();// all routes must check role
+				.antMatchers(HttpMethod.POST, URLCommon.LOGIN).permitAll().anyRequest().authenticated();// all routes
+																										// must check
+																										// role
 		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 }

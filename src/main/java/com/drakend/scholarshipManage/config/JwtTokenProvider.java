@@ -4,8 +4,8 @@ import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
+import com.drakend.scholarshipManage.helper.DateHelpers;
 import com.drakend.scholarshipManage.service.impl.UserDetailImpl;
-import com.drakend.scholarshipManage.utils.DateHelpers;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;

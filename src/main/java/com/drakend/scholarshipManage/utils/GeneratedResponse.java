@@ -1,13 +1,13 @@
-//package com.drakend.scholarshipManage.utils;
-//
-//import org.springframework.http.HttpEntity;
-//import org.springframework.http.ResponseEntity;
-//
-//import lombok.Builder;
-//
-//@Builder
-//public static class GeneratedResponse<T> {
-//	
+package com.drakend.scholarshipManage.utils;
+
+import lombok.Builder;
+
+@Builder
+public class GeneratedResponse<T> {
+	private String message;
+	
+	private T body;
+	
 //	private static ResponseEntity<T> instance;
 //
 //	static ResponseEntity<T> builder(){
@@ -17,4 +17,4 @@
 //		}
 //			
 //	}
-//}
+}

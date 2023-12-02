@@ -1,4 +1,4 @@
-package com.drakend.scholarshipManage.utils;
+package com.drakend.scholarshipManage.helper;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
